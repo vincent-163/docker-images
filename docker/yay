@@ -4,4 +4,4 @@ RUN useradd -ms /bin/bash user && groupadd sudo && usermod -aG sudo user && \
     echo '%sudo ALL=(ALL:ALL) NOPASSWD: ALL' > /etc/sudoers.d/50-sudo-nopasswd
 USER user
 WORKDIR /home/user
-RUN git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
+RUN git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si --noconfirm
