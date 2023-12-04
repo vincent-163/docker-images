@@ -3,5 +3,6 @@ RUN pacman -Syu --needed --noconfirm --noprogressbar git base base-devel sudo
 RUN useradd -ms /bin/bash user && groupadd sudo && usermod -aG sudo user && \
     echo '%sudo ALL=(ALL:ALL) NOPASSWD: ALL' > /etc/sudoers.d/50-sudo-nopasswd
 RUN printf '[archlinuxcn]\nServer = https://repo.archlinuxcn.org/$arch\n' >> /etc/pacman.conf && \
+    pacman-key --init && \
     pacman -Syu --noconfirm --noprogressbar archlinuxcn-keyring && \
     pacman -Syu --noconfirm --noprogressbar yay
