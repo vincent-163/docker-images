@@ -7,4 +7,4 @@ RUN printf '[archlinuxcn]\nServer = https://repo.archlinuxcn.org/$arch\n' >> /et
     pacman -Syu --noconfirm --noprogressbar archlinuxcn-keyring && \
     pacman -Syu --noconfirm --noprogressbar yay
 RUN pacman -Syu --noconfirm --noprogressbar noto-fonts-cjk texlive texlive-langchinese pandoc
-RUN sudo -u user yay -S aur/ttf-ms-win11-auto --noconfirm --noprogressbar
+RUN sudo -u user yay -S aur/ttf-ms-win10-auto --noconfirm --noprogressbar
