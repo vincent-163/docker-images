@@ -1,0 +1,3 @@
+FROM ghcr.io/vincent-163/docker-images/yay:latest
+RUN pacman -Syu --noconfirm --noprogressbar certbot certbot-dns-cloudflare go
+RUN go install tailscale.com/cmd/derper@main
