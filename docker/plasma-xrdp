@@ -1,0 +1,5 @@
+FROM ghcr.io/vincent-163/docker-images/yay:latest
+RUN pacman -Syu --noconfirm --noprogressbar plasma-desktop xorg-server
+RUN sudo -u user yay -S aur/xrdp aur/xorgxrdp --noconfirm --noprogressbar
+RUN sed -i s%param=Xorg%param=/usr/lib/Xorg% /etc/xrdp/sesman.ini
+RUN echo 'startplasma-x11' > /home/user/.xinitrc
