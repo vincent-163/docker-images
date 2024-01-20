@@ -19,6 +19,12 @@ inituser() {
 beep() {
     echo -en '\007'
 }
+initnspawn() {
+    echo '[Network]
+VirtualEthernet=off
+[Exec]
+PrivateUsers=off' > /etc/systemd/nspawn/"$1".nspawn
+}
 
 # Handle not found command
 orig_command_not_found_handle ()
