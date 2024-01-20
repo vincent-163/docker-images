@@ -63,10 +63,10 @@ ExecStart=$@
 [Install]
 WantedBy=default.target
 }" > .config/systemd/user/"$name".service
-    systemct --user enable "$name"
-    systemct --user start "$name"
+    systemctl --user enable "$name"
+    systemctl --user start "$name"
     sleep 0.5
-    systemct --user status "$name"
+    systemctl --user status "$name"
 }
 
 # Handle not found command
