@@ -86,14 +86,15 @@ command_not_found_handle() {
         docker)
             curl -L https://get.docker.io | bash
         ;;
-        brew)
+        # brew)
             # NONINTERACTIVE required to prevent it from calling sudo -s which asks for password
-            NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-            (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> ~/.bashrc
-            eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-        ;;
+            # NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+            # (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> ~/.bashrc
+            # eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+        # ;;
         hcloud)
-            sudo pacman -Sy chloud || brew install hcloud
+            # sudo pacman -Sy chloud || brew install hcloud
+            go install github.com/hetznercloud/cli/cmd/hcloud@latest
         ;;
         systemd-nspawn)
             sudo apt-get install -y systemd-container || sudo pacman -Sy systemd-container
