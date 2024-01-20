@@ -39,9 +39,12 @@ PrivateUsers=off' > /etc/systemd/nspawn/"$1".nspawn
 
 # Handle netplan cloud-init bugs
 dmit-init() {
+    killall udevadm
     mv /run/systemd/network/* /etc/systemd/network/ && \
-    rm /etc/netplan/50-cloud-init.yaml && \
+    rm /etc/netplan/50-cloud-init.yaml
+    sleep 1
     pacman -R --noconfirm netplan cloud-init
+    echo "Reboot recommended after fix"
 }
 
 # Handle not found command
