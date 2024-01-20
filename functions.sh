@@ -35,6 +35,18 @@ orig_command_not_found_handle ()
 }
 command_not_found_handle() {
     case "$1" in
+        sudo)
+            apt-get install -y sudo
+        ;;
+        vim)
+            sudo apt-get install -y vim
+        ;;
+        tmux)
+            sudo apt-get install -y tmux
+        ;;
+        curl)
+            sudo apt-get install -y curl
+        ;;
         docker)
             curl -L https://get.docker.io | bash
         ;;
@@ -42,16 +54,9 @@ command_not_found_handle() {
             sudo apt-get install -y systemd-container
         ;;
     esac
-    type "$1" && "$1" "$@" || return orig_command_not_found_handle "$1" "$@"
-}
-
-# Auto installs
-docker() {
-    if which docker; then
-        unset -f docker
-        alias 
-        docker "$@"
+    if type "$1"; then
+        "$@"
     else
-        curl -L https://get.docker.io | bash
+        orig_command_not_found_handle "$@"
     fi
 }
