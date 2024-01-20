@@ -64,6 +64,16 @@ command_not_found_handle() {
         rclone)
             sudo pacman -Sy rclone || curl https://rclone.org/install.sh | sudo bash
         ;;
+        go)
+            sudo pacman -Sy go || (
+                # https://go.dev/doc/install
+                # This installation guide mixes up root installation and user profile, bad taste
+                mkdir -p ~/.local
+                rm -rf ~/.local/go && curl -L https://go.dev/dl/go1.21.6.linux-amd64.tar.gz | tar -C ~/.local/ -xzf -
+                (grep -v '$HOME/.local/go/bin' ~/.profile; echo 'export PATH=$PATH:$HOME/.local/go/bin') > ~/.profile.new
+                mv ~/.profile.new ~/.profile
+            )
+        ;;
         docker)
             curl -L https://get.docker.io | bash
         ;;
