@@ -69,22 +69,22 @@ export PATH=$HOME/.local/go/bin:$HOME/go/bin:$PATH
 command_not_found_handle() {
     case "$1" in
         sudo)
-            apt-get install -y sudo || pacman -Sy sudo
+            apt-get install -y sudo || pacman -Sy --noconfirm sudo
         ;;
         vim|git|tmux|curl|rsync|git)
-            sudo apt-get install -y "$1" || sudo pacman -Sy "$1"
+            sudo apt-get install -y "$1" || sudo pacman -Sy --noconfirm "$1"
         ;;
         rclone)
-            sudo pacman -Sy rclone || curl https://rclone.org/install.sh | sudo bash
+            sudo pacman -Sy --noconfirm rclone || curl https://rclone.org/install.sh | sudo bash
         ;;
         python)
-            sudo pacman -Sy python || sudo apt-get install -y python-is-python3
+            sudo pacman -Sy --noconfirm python || sudo apt-get install -y python-is-python3
         ;;
         pip)
-            sudo pacman -Sy python-pip || sudo apt-get install -y pip
+            sudo pacman -Sy --noconfirm python-pip || sudo apt-get install -y pip
         ;;
         go)
-            sudo pacman -Sy go || (
+            sudo pacman -Sy --noconfirm go || (
                 # https://go.dev/doc/install
                 # This installation guide installs with root but suggests adding PATH to user profile
                 # bad taste
