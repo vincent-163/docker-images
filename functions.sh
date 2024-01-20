@@ -47,6 +47,12 @@ command_not_found_handle() {
         curl)
             sudo apt-get install -y curl || sudo pacman -Sy curl
         ;;
+        rsync)
+            sudo apt-get install -y rsync || sudo pacman -Sy rsync
+        ;;
+        rclone)
+            sudo pacman -Sy rclone || curl https://rclone.org/install.sh | sudo bash
+        ;;
         docker)
             curl -L https://get.docker.io | bash
         ;;
