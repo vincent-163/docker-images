@@ -51,6 +51,24 @@ dmit-init() {
     echo "Reboot recommended after fix"
 }
 
+# Run command as systemd service
+sysuser() {
+    name="$1"; shift
+    echo "[Unit]
+Description=$name service
+
+[Service]
+ExecStart=$@
+
+[Install]
+WantedBy=default.target
+}" > .config/systemd/user/"$name".service
+    systemct --user enable "$name"
+    systemct --user start "$name"
+    sleep 0.5
+    systemct --user status "$name"
+}
+
 # Handle not found command
 orig_command_not_found_handle ()
 {
