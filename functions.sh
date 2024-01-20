@@ -70,6 +70,8 @@ command_not_found_handle() {
         brew)
             # NONINTERACTIVE required to prevent it from calling sudo -s which asks for password
             NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+            (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> ~/.bashrc
+            eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
         ;;
         hcloud)
             sudo pacman -Sy chloud || brew install hcloud
