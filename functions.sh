@@ -77,7 +77,8 @@ command_not_found_handle() {
             curl -L https://get.docker.io | bash
         ;;
         brew)
-            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+            # NONINTERACTIVE required to prevent it from calling sudo -s which asks for password
+            NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         ;;
         hcloud)
             sudo pacman -Sy chloud || brew install hcloud
