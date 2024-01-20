@@ -37,16 +37,12 @@ command_not_found_handle() {
     case "$1" in
         docker)
             curl -L https://get.docker.io | bash
-            docker "$@"
         ;;
         systemd-nspawn)
             sudo apt-get install -y systemd-container
-            systemd-nspawn "$@"
-        ;;
-        *)
-            orig command_not_found_handle "$@"
         ;;
     esac
+    type "$1" && "$1" "$@" || return orig_command_not_found_handle "$1" "$@"
 }
 
 # Auto installs
