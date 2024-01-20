@@ -2,8 +2,9 @@
 
 update() {
     curl -L "https://github.com/vincent-163/docker-images/raw/main/functions.sh?_=$(date +%s)" -o ~/functions.sh
-    (echo 'source ~/functions.sh'; grep -v 'source ~/functions.sh' ~/.bashrc) > ~/.bashrc.tmp
-    mv ~/.bashrc.tmp ~/.bashrc
+    (echo 'source ~/functions.sh'; grep -v 'source ~/functions.sh' ~/.profile) > ~/.profile.tmp
+    
+    mv ~/.profile.tmp ~/.profile
     source ~/functions.sh
 }
 
@@ -71,7 +72,7 @@ command_not_found_handle() {
         sudo)
             apt-get install -y sudo || pacman -Sy --noconfirm sudo
         ;;
-        vim|git|tmux|curl|rsync|git)
+        vim|git|tmux|curl|rsync|git|which)
             sudo apt-get install -y "$1" || sudo pacman -Sy --noconfirm "$1"
         ;;
         rclone)
@@ -82,6 +83,11 @@ command_not_found_handle() {
         ;;
         pip)
             sudo pacman -Sy --noconfirm python-pip || sudo apt-get install -y pip
+        ;;
+        hysteria)
+            bash <(curl -fsSL https://get.hy2.sh/)
+            # Uninstall: bash <(curl -fsSL https://get.hy2.sh/) --remove
+            # Location: /usr/local/bin/hysteria
         ;;
         go)
             sudo pacman -Sy --noconfirm go || (
