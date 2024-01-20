@@ -76,6 +76,12 @@ command_not_found_handle() {
         docker)
             curl -L https://get.docker.io | bash
         ;;
+        brew)
+            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        ;;
+        hcloud)
+            sudo pacman -Sy chloud || brew install hcloud
+        ;;
         systemd-nspawn)
             sudo apt-get install -y systemd-container || sudo pacman -Sy systemd-container
         ;;
