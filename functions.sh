@@ -37,6 +37,13 @@ VirtualEthernet=off
 PrivateUsers=off' > /etc/systemd/nspawn/"$1".nspawn
 }
 
+# Handle netplan cloud-init bugs
+dmit-init() {
+    mv /run/systemd/network/* /etc/systemd/network/ && \
+    rm /etc/netplan/50-cloud-init.yaml && \
+    pacman -R --noconfirm netplan cloud-init
+}
+
 # Handle not found command
 orig_command_not_found_handle ()
 {
@@ -59,7 +66,7 @@ export PATH=$HOME/.local/go/bin:$HOME/go/bin:$PATH
 command_not_found_handle() {
     case "$1" in
         sudo)
-            apt-get install -y sudo || sudo pacman -Sy sudo
+            apt-get install -y sudo || pacman -Sy sudo
         ;;
         vim|git|tmux|curl|rsync|git)
             sudo apt-get install -y "$1" || sudo pacman -Sy "$1"
@@ -97,6 +104,9 @@ command_not_found_handle() {
         hcloud)
             # sudo pacman -Sy chloud || brew install hcloud
             go install github.com/hetznercloud/cli/cmd/hcloud@latest
+        ;;
+        tailscale)
+            curl -fsSL https://tailscale.com/install.sh | sh
         ;;
         systemd-nspawn)
             sudo apt-get install -y systemd-container || sudo pacman -Sy systemd-container
