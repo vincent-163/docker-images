@@ -30,6 +30,7 @@ waitforp() {
     done <<< "$list" 
 }
 initnspawn() {
+    mkdir -p /etc/systemd/nspawn/
     echo '[Network]
 VirtualEthernet=off
 [Exec]
