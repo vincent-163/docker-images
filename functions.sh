@@ -66,8 +66,7 @@ ExecStart=$@
 WorkingDirectory=$HOME
 
 [Install]
-WantedBy=default.target
-}" > .config/systemd/user/"$name".service
+WantedBy=default.target" > .config/systemd/user/"$name".service
     systemctl --user enable "$name"
     systemctl --user start "$name"
     sleep 0.5
