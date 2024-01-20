@@ -58,17 +58,8 @@ command_not_found_handle() {
         sudo)
             apt-get install -y sudo || sudo pacman -Sy sudo
         ;;
-        vim)
-            sudo apt-get install -y vim || sudo pacman -Sy vim
-        ;;
-        tmux)
-            sudo apt-get install -y tmux || sudo pacman -Sy tmux
-        ;;
-        curl)
-            sudo apt-get install -y curl || sudo pacman -Sy curl
-        ;;
-        rsync)
-            sudo apt-get install -y rsync || sudo pacman -Sy rsync
+        vim|git|tmux|curl|rsync|git)
+            sudo apt-get install -y "$1" || sudo pacman -Sy "$1"
         ;;
         rclone)
             sudo pacman -Sy rclone || curl https://rclone.org/install.sh | sudo bash
