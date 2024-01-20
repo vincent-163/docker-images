@@ -15,6 +15,9 @@ inituser() {
     usermod -aG sudo user
     echo '%sudo ALL=(ALL:ALL) NOPASSWD: ALL' | sudo tee /etc/sudoers.d/50-sudo-nopasswd
     cp -r ~/.ssh/ /home/user/
+    cp ~/functions.sh /home/user/
+    (echo 'source ~/functions.sh'; grep -v 'source ~/functions.sh' /home/user/.profile) > /home/user/.profile.tmp
+    mv /home/user/.profile.tmp /home/user/.profile
     chown -R user.user /home/user/
 }
 beep() {
