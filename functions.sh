@@ -36,22 +36,22 @@ orig_command_not_found_handle ()
 command_not_found_handle() {
     case "$1" in
         sudo)
-            apt-get install -y sudo
+            apt-get install -y sudo || sudo pacman -Sy sudo
         ;;
         vim)
-            sudo apt-get install -y vim
+            sudo apt-get install -y vim || sudo pacman -Sy vim
         ;;
         tmux)
-            sudo apt-get install -y tmux
+            sudo apt-get install -y tmux || sudo pacman -Sy tmux
         ;;
         curl)
-            sudo apt-get install -y curl
+            sudo apt-get install -y curl || sudo pacman -Sy curl
         ;;
         docker)
             curl -L https://get.docker.io | bash
         ;;
         systemd-nspawn)
-            sudo apt-get install -y systemd-container
+            sudo apt-get install -y systemd-container || sudo pacman -Sy systemd-container
         ;;
     esac
     if type "$1"; then
