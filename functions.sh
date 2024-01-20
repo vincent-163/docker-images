@@ -91,6 +91,7 @@ command_not_found_handle() {
             bash <(curl -fsSL https://get.hy2.sh/)
             # Uninstall: bash <(curl -fsSL https://get.hy2.sh/) --remove
             # Location: /usr/local/bin/hysteria
+            sudo setcap cap_net_bind_service=+ep $(which hysteria)
         ;;
         go)
             sudo pacman -Sy --noconfirm go || (
