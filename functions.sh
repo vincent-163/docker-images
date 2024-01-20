@@ -57,6 +57,7 @@ sysuser() {
     if [ ! "$PWD" == "$HOME" ]; then
         echo "Working directory has to be $HOME"
     fi
+    mkdir -p .config/systemd/user
     echo "[Unit]
 Description=$name service
 
