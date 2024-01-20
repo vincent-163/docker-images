@@ -83,7 +83,7 @@ command_not_found_handle() {
                 # mv ~/.profile.new ~/.profile
             )
         ;;
-        docker)
+        docker|docker-compose)
             curl -L https://get.docker.io | bash
         ;;
         # brew)
