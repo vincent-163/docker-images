@@ -53,7 +53,9 @@ orig_command_not_found_handle ()
         fi;
     fi
 }
-export PATH=$PATH:$HOME/.local/go/bin
+# ~/.local/go/bin for go and gofmt
+# ~/go/bin for packages installed via go
+export PATH=$HOME/.local/go/bin:$HOME/go/bin:$PATH
 command_not_found_handle() {
     case "$1" in
         sudo)
