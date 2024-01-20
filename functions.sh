@@ -65,6 +65,12 @@ command_not_found_handle() {
         rclone)
             sudo pacman -Sy rclone || curl https://rclone.org/install.sh | sudo bash
         ;;
+        python)
+            sudo pacman -Sy python || sudo apt-get install -y python-is-python3
+        ;;
+        pip)
+            sudo pacman -Sy python-pip || sudo apt-get install -y pip
+        ;;
         go)
             sudo pacman -Sy go || (
                 # https://go.dev/doc/install
