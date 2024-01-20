@@ -16,3 +16,46 @@ inituser() {
     cp -r ~/.ssh/ /home/user/
     chown -R user.user /home/user/
 }
+
+# Handle not found command
+orig_command_not_found_handle ()
+{
+    if [ -x /usr/lib/command-not-found ]; then
+        /usr/lib/command-not-found -- "$1";
+        return $?;
+    else
+        if [ -x /usr/share/command-not-found/command-not-found ]; then
+            /usr/share/command-not-found/command-not-found -- "$1";
+            return $?;
+        else
+            printf "%s: command not found\n" "$1" 1>&2;
+            return 127;
+        fi;
+    fi
+}
+command_not_found_handle() {
+    case "$1" in
+        docker)
+            curl -L https://get.docker.io | bash
+            docker "$@"
+        ;;
+        systemd-nspawn)
+            sudo apt-get install -y systemd-container
+            systemd-nspawn "$@"
+        ;;
+        *)
+            orig command_not_found_handle "$@"
+        ;;
+    esac
+}
+
+# Auto installs
+docker() {
+    if which docker; then
+        unset -f docker
+        alias 
+        docker "$@"
+    else
+        curl -L https://get.docker.io | bash
+    fi
+}
