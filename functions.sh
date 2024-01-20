@@ -53,6 +53,7 @@ orig_command_not_found_handle ()
         fi;
     fi
 }
+export PATH=$PATH:$HOME/.local/go/bin
 command_not_found_handle() {
     case "$1" in
         sudo)
@@ -67,11 +68,13 @@ command_not_found_handle() {
         go)
             sudo pacman -Sy go || (
                 # https://go.dev/doc/install
-                # This installation guide mixes up root installation and user profile, bad taste
+                # This installation guide installs with root but suggests adding PATH to user profile
+                # bad taste
+                # we add path in this functions.sh directly
                 mkdir -p ~/.local
                 rm -rf ~/.local/go && curl -L https://go.dev/dl/go1.21.6.linux-amd64.tar.gz | tar -C ~/.local/ -xzf -
-                (grep -v '$HOME/.local/go/bin' ~/.profile; echo 'export PATH=$PATH:$HOME/.local/go/bin') > ~/.profile.new
-                mv ~/.profile.new ~/.profile
+                # (grep -v '$HOME/.local/go/bin' ~/.profile; echo 'export PATH=$PATH:$HOME/.local/go/bin') > ~/.profile.new
+                # mv ~/.profile.new ~/.profile
             )
         ;;
         docker)
