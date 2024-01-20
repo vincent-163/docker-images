@@ -9,3 +9,4 @@ inituser() {
     cp -r ~/.ssh/ /home/user/
     chown -R user.user /home/user/
 }
+

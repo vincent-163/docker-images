@@ -4,7 +4,9 @@ on:
   workflow_dispatch:
   push:
     branches: [ main ]
-    paths: 'docker/**'
+    paths:
+      - 'docker/**'
+      - '.github/workflows/docker.yml'
   schedule: 
     - cron: '0 0 * * *'
 
