@@ -128,7 +128,7 @@ command_not_found_handle() {
             )
         ;;
         docker|docker-compose)
-            curl -L https://get.docker.io | bash
+            sudo pacman -Sy --noconfirm docker docker-compose || curl -L https://get.docker.io | bash
         ;;
         # brew)
             # NONINTERACTIVE required to prevent it from calling sudo -s which asks for password
