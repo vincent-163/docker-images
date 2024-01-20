@@ -16,6 +16,9 @@ inituser() {
     cp -r ~/.ssh/ /home/user/
     chown -R user.user /home/user/
 }
+beep() {
+    echo -en '\007'
+}
 
 # Handle not found command
 orig_command_not_found_handle ()
