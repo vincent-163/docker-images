@@ -19,6 +19,16 @@ inituser() {
 beep() {
     echo -en '\007'
 }
+waitfor() {
+    tail --pid="$1" -f /dev/null
+}
+waitforp() {
+    list=$(pgrep "$@")
+    echo "Waiting for $@: $list"
+    while read i; do
+        waitfor "$i"
+    done <<< "$list" 
+}
 initnspawn() {
     echo '[Network]
 VirtualEthernet=off
