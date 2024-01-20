@@ -54,11 +54,15 @@ dmit-init() {
 # Run command as systemd service
 sysuser() {
     name="$1"; shift
+    if [ ! "$PWD" == "$HOME" ]; then
+        echo "Working directory has to be $HOME"
+    fi
     echo "[Unit]
 Description=$name service
 
 [Service]
 ExecStart=$@
+WorkingDirectory=$HOME
 
 [Install]
 WantedBy=default.target
