@@ -2,9 +2,9 @@
 
 update() {
     curl -L "https://github.com/vincent-163/docker-images/raw/main/functions.sh?_=$(date +%s)" -o ~/functions.sh
-    (echo 'source ~/functions.sh'; grep -v 'source ~/functions.sh' ~/.profile) > ~/.profile.tmp
+    (echo 'source ~/functions.sh'; grep -v 'source ~/functions.sh' ~/.bashrc) > ~/.bashrc.tmp
     
-    mv ~/.profile.tmp ~/.profile
+    mv ~/.bashrc.tmp ~/.bashrc
     source ~/functions.sh
 }
 
