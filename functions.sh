@@ -19,6 +19,7 @@ inituser() {
     (echo 'source ~/functions.sh'; grep -v 'source ~/functions.sh' /home/user/.profile) > /home/user/.profile.tmp
     mv /home/user/.profile.tmp /home/user/.profile
     chown -R user.user /home/user/
+    loginctl enable-linger user
 }
 beep() {
     echo -en '\007'
