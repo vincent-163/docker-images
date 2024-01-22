@@ -98,7 +98,7 @@ command_not_found_handle() {
         sudo)
             apt-get install -y sudo || pacman -Sy --noconfirm sudo
         ;;
-        vim|git|tmux|curl|rsync|git|which|ufw|bmon|man)
+        vim|git|tmux|curl|rsync|git|which|ufw|bmon|man|jq)
             sudo apt-get install -y "$1" || sudo pacman -Sy --noconfirm "$1"
         ;;
         rclone)
