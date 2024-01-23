@@ -115,6 +115,9 @@ command_not_found_handle() {
         vim|git|tmux|curl|rsync|git|which|ufw|bmon|man|jq)
             sudo apt-get install -y "$1" || sudo pacman -Sy --noconfirm "$1"
         ;;
+        apt-file)
+            sudo apt-get install -y "$1"
+        ;;
         rclone)
             sudo pacman -Sy --noconfirm rclone || curl https://rclone.org/install.sh | sudo bash
         ;;
