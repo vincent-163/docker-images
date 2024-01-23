@@ -104,6 +104,9 @@ orig_command_not_found_handle ()
 export PATH=$HOME/.local/go/bin:$HOME/go/bin:$PATH
 command_not_found_handle() {
     case "$1" in
+        pacman|apt-get|apt)
+            # ignore
+        ;;
         sudo)
             apt-get install -y sudo || pacman -Sy --noconfirm sudo
         ;;
