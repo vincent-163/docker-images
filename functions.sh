@@ -1,11 +1,13 @@
 #!/bin/bash
 
 # sudo alias
-alias apt-get="sudo apt-get"
-alias apt="sudo apt"
-alias pacman="sudo pacman"
-alias docker="sudo docker"
-alias docker-compose="sudo docker-compose"
+if type sudo; then
+    alias apt-get="sudo apt-get"
+    alias apt="sudo apt"
+    alias pacman="sudo pacman"
+    alias docker="sudo docker"
+    alias docker-compose="sudo docker-compose"
+fi
 
 update() {
     curl -L "https://github.com/vincent-163/docker-images/raw/main/functions.sh?_=$(date +%s)" -o ~/functions.sh
