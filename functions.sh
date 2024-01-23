@@ -153,7 +153,7 @@ command_not_found_handle() {
         tailscale)
             curl -fsSL https://tailscale.com/install.sh | sh
         ;;
-        systemd-nspawn)
+        systemd-nspawn|machinectl)
             sudo apt-get install -y systemd-container || sudo pacman -Sy systemd-container
         ;;
     esac
