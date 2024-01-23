@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# sudo alias
+alias apt-get="sudo apt-get"
+alias apt="sudo apt"
+alias pacman="sudo pacman"
+alias docker="sudo docker"
+alias docker-compose="sudo docker-compose"
+
 update() {
     curl -L "https://github.com/vincent-163/docker-images/raw/main/functions.sh?_=$(date +%s)" -o ~/functions.sh
     (echo 'source ~/functions.sh'; grep -v 'source ~/functions.sh' ~/.bashrc) > ~/.bashrc.tmp
