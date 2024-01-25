@@ -1,14 +1,13 @@
 name: Docker Image CI
 
 on:
+  workflow_call:
   workflow_dispatch:
   push:
     branches: [ main ]
     paths:
       - 'docker/**'
       - '.github/workflows/docker.yml'
-  schedule: 
-    - cron: '0 0 * * *'
 
 jobs:
   build:
@@ -29,9 +28,7 @@ jobs:
   
     - name: Build and push Docker images
       run: |
-        FILES=docker/*
-        for f in $FILES
-        do
+        git diff --name-only HEAD~ HEAD -- 'docker/*' | while read f; do
           filename=$(basename -- "$f")
           image_name="${filename%.*}" 
           docker build -t $image_name -f $f .
