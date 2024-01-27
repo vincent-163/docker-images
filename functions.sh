@@ -3,7 +3,7 @@
 # sudo alias
 if type sudo; then
     for i in apt-get apt pacman docker docker-compose; do
-        type "$i" 2>/dev/null && alias "$i"="sudo $i"
+        type "$i" >/dev/null 2>&1 && alias "$i"="sudo $i"
     done
 fi
 
