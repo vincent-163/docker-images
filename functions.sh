@@ -82,7 +82,7 @@ WantedBy=default.target" > .config/systemd/user/"$name".service
     sleep 0.5
     systemctl --user status "$name"
 }
-.
+
 # runlike
 runlike() {
     docker run --rm -v /var/run/docker.sock:/var/run/docker.sock assaflavie/runlike "$@"
