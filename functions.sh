@@ -2,11 +2,9 @@
 
 # sudo alias
 if type sudo; then
-    alias apt-get="sudo apt-get"
-    alias apt="sudo apt"
-    alias pacman="sudo pacman"
-    alias docker="sudo docker"
-    alias docker-compose="sudo docker-compose"
+    for i in apt-get apt pacman docker docker-compose; do
+        type "$i" 2>/dev/null && alias "$i"="sudo $i"
+    done
 fi
 
 update() {
