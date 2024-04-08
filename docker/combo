@@ -1,0 +1,50 @@
+# Use the official Ubuntu base image
+FROM ubuntu:latest
+
+# Set environment variables for MySQL
+ENV MYSQL_DATABASE=data \
+    MYSQL_USER=data \
+    MYSQL_ALLOW_EMPTY_PASSWORD=yes \
+    MYSQL_DATA_DIR=/data/mysql \
+    REDIS_DATA_DIR=/data/redis \
+    SSH_DATA_DIR=/data/ssh
+
+# Install required packages
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    redis-server \
+    mysql-server \
+    openssh-server \
+    supervisor \
+    && rm -rf /var/lib/apt/lists/*
+
+# Configure MySQL to use the data directory
+RUN sed -i 's|/var/lib/mysql|${MYSQL_DATA_DIR}|g' /etc/mysql/mysql.conf.d/mysqld.cnf
+
+# Configure Redis to use the data directory
+RUN sed -i 's|dir ./|dir ${REDIS_DATA_DIR}|' /etc/redis/redis.conf
+
+# Configure SSH
+RUN mkdir -p ${SSH_DATA_DIR} \
+    && sed -i 's|#PasswordAuthentication yes|PasswordAuthentication no|g' /etc/ssh/sshd_config \
+    && sed -i 's|#GatewayPorts no|GatewayPorts yes|g' /etc/ssh/sshd_config \
+    && echo 'AllowTcpForwarding yes' >> /etc/ssh/sshd_config \
+    && echo 'PermitOpen any' >> /etc/ssh/sshd_config
+
+# Add user for SSH
+RUN useradd -m -d /home/user user \
+    && mkdir -p /home/user/.ssh \
+    && chown -R user:user /home/user/.ssh
+
+# Copy supervisord configuration file
+COPY combo/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Copy entrypoint script
+COPY combo/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+# Expose ports for Redis, MySQL and SSH
+EXPOSE 6379 3306 22
+
+# Set the entrypoint to the entrypoint script
+ENTRYPOINT ["/entrypoint.sh"]
+
