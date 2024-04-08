@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mkdir -p "${MYSQL_DATA_DIR}" "${REDIS_DATA_DIR}" "${SSH_DATA_DIR}"
+mkdir -p "${MYSQL_DATA_DIR}" "${REDIS_DATA_DIR}" "${SSH_DATA_DIR}" "${MONGODB_DATA_DIR}"
 
 # Check if MySQL config exists in /data, if not copy the default one
 if [ ! -f "${MYSQL_DATA_DIR}/mysqld.cnf" ]; then
@@ -17,6 +17,11 @@ if [ ! -f "${SSH_DATA_DIR}/sshd_config" ]; then
 	cp /etc/ssh/sshd_config "${SSH_DATA_DIR}/sshd_config"
 fi
 mkdir -p /run/sshd
+
+# Check if MongoDB config exists in /data, if not copy the default one
+if [ ! -f "${MONGODB_DATA_DIR}/mongod.conf" ]; then
+    cp /etc/mongod.conf ${MONGODB_DATA_DIR}/mongod.conf
+fi
 
 # Start MySQL service to create user and database
 service mysql start
