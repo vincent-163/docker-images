@@ -47,4 +47,3 @@ EXPOSE 6379 3306 22
 
 # Set the entrypoint to the entrypoint script
 ENTRYPOINT ["/entrypoint.sh"]
-
