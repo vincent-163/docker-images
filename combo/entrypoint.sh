@@ -46,7 +46,7 @@ done
 
 # Generate user SSH keys if they do not exist
 if [ ! -f "${SSH_DATA_DIR}/user_ssh_key" ]; then
-    ssh-keygen -t rsa -f "${SSH_DATA_DIR}/user_ssh_key" -N ''
+    ssh-keygen -t ed25519 -f "${SSH_DATA_DIR}/user_ssh_key" -N ''
 fi
 # Prepare the authorized_keys file for the user
 echo "command=\"echo 'This key can only be used for port forwarding.'\",no-agent-forwarding,no-X11-forwarding,no-pty $(cat ${SSH_DATA_DIR}/user_ssh_key.pub)" > /home/user/.ssh/authorized_keys
