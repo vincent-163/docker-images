@@ -1,16 +1,19 @@
 # Use the official Ubuntu base image
 FROM ubuntu:latest
 
-# Set environment variables for MySQL, Redis, SSH, and MongoDB
+# Set environment variables for MySQL, Redis, SSH, MongoDB, and PostgreSQL
 ENV MYSQL_DATABASE=data \
     MYSQL_USER=data \
     MYSQL_ALLOW_EMPTY_PASSWORD=yes \
     MYSQL_DATA_DIR=/data/mysql \
     REDIS_DATA_DIR=/data/redis \
     SSH_DATA_DIR=/data/ssh \
-    MONGODB_DATA_DIR=/data/mongodb
+    MONGODB_DATA_DIR=/data/mongodb \
+    POSTGRES_DATA_DIR=/data/postgresql \
+    POSTGRES_USER=data \
+    POSTGRES_DB=data
 
-# Install gnupg and software-properties-common for MongoDB repository
+# Install gnupg, software-properties-common, and curl for repositories
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
     gnupg \
     software-properties-common \
@@ -21,13 +24,15 @@ RUN curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc | \
    gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg --dearmor \
     && echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" > /etc/apt/sources.list.d/mongodb-org-7.0.list
 
-# Install required packages including MongoDB
+# Install required packages including MongoDB and PostgreSQL
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
     redis-server \
     mysql-server \
     openssh-server \
     supervisor \
     mongodb-org \
+    postgresql postgresql-contrib \
+    sudo \
     && rm -rf /var/lib/apt/lists/*
 
 # Configure MySQL to use the data directory
@@ -40,6 +45,12 @@ RUN sed -i 's|dir ./|dir ${REDIS_DATA_DIR}|' /etc/redis/redis.conf
 RUN mkdir -p ${MONGODB_DATA_DIR} \
     && chown -R mongodb:mongodb ${MONGODB_DATA_DIR} \
     && sed -i "s|dbPath: /var/lib/mongodb|dbPath: ${MONGODB_DATA_DIR}|" /etc/mongod.conf
+
+# Configure PostgreSQL to use the data directory
+RUN mkdir -p ${POSTGRES_DATA_DIR} \
+    && chown -R postgres:postgres ${POSTGRES_DATA_DIR} \
+    && sed -i "s|data_directory = '/var/lib/postgresql/.*'|data_directory = '${POSTGRES_DATA_DIR}'|" /etc/postgresql/*/main/postgresql.conf \
+    && sed -i "s|#listen_addresses = 'localhost'|listen_addresses = '*'|" /etc/postgresql/*/main/postgresql.conf
 
 # Configure SSH
 RUN mkdir -p ${SSH_DATA_DIR} \
@@ -60,9 +71,8 @@ COPY combo/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY combo/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-# Expose ports for Redis, MySQL, SSH, and MongoDB
-EXPOSE 6379 3306 22 27017
+# Expose ports for Redis, MySQL, SSH, MongoDB, and PostgreSQL
+EXPOSE 6379 3306 22 27017 5432
 
 # Set the entrypoint to the entrypoint script
 ENTRYPOINT ["/entrypoint.sh"]
-
