@@ -29,8 +29,8 @@ if [ ! -f "${POSTGRES_DATA_DIR}/*/main/postgresql.conf" ]; then
     chown -R postgres:postgres ${POSTGRES_DATA_DIR}
     su - postgres -c "/usr/lib/postgresql/14/bin/initdb -D /data/postgresql/"
     # Modify pg_hba.conf to allow no-password login
-    echo "local all all trust" > ${POSTGRES_DATA_DIR}/pg_hba.conf
-    echo "host all all all trust" >> ${POSTGRES_DATA_DIR}/pg_hba.conf
+    echo "local all all trust" > ${POSTGRES_DATA_DIR}/*/main/pg_hba.conf
+    echo "host all all all trust" >> ${POSTGRES_DATA_DIR}/*/main/pg_hba.conf
 fi
 
 # Start MySQL service to create user and database
